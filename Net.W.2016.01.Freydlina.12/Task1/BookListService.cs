@@ -7,7 +7,7 @@ namespace Task1
 {
     class BookListService
     {
-        public CustomSet<Book> Books { get; private set; }
+        public CustomSet<Book> Books { get; }
 
         public BookListService()
         {

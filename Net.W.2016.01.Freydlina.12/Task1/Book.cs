@@ -23,7 +23,7 @@ namespace Task1
         {
             Title = title;
             Publisher = publisher;
-            if (publishingYear <= 1000 || publishingYear >= 3000) throw new ArgumentException();
+            if (publishingYear < 1000 || publishingYear >= 3000) throw new ArgumentException();
             PublishingYear = publishingYear;
             Authors = authors;
         }

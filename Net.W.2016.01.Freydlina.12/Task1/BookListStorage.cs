@@ -8,7 +8,7 @@ using Task2;
 
 namespace Task1
 {
-    class BookListStorage
+    public class BookListStorage
     {
         public static void UploadToFile(CustomSet<Book> books, string fileName)
         {
@@ -26,9 +26,28 @@ namespace Task1
             }
         }
 
-        public static CustomSet<Book> DownloadFromFile(string file)
+        public static CustomSet<Book> DownloadFromFile(string fileName)
         {
-            throw new NotImplementedException();
+            CustomSet<Book> books = new CustomSet<Book>();
+            using (BinaryReader reader = new BinaryReader(File.Open(fileName, FileMode.Open)))
+            {
+                while (reader.BaseStream.Position != reader.BaseStream.Length)
+                {
+                    string title = reader.ReadString();
+                    string authors = "";
+                    while (true)
+                    {
+                        string author = reader.ReadString();
+                        if (author == "-") break;
+                        authors += author + "|";
+                    }
+                    string publisher = reader.ReadString();
+                    int publishingYear = reader.ReadInt32();
+                    Book book = new Book(title, publisher, publishingYear, authors.Split('|'));
+                    books.Add(book);
+                }
+            }
+            return books;
         }
     }
 }
