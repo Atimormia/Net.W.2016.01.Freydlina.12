@@ -64,6 +64,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Task1.Logger\Task1.Logger.csproj">
+      <Project>{c65ec014-268e-4a7f-94b9-5ab7a1fe7802}</Project>
+      <Name>Task1.Logger</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Task1\Task1.csproj">
       <Project>{5d84eb08-d4ca-4ff5-ae2e-6e2906c3226e}</Project>
       <Name>Task1</Name>

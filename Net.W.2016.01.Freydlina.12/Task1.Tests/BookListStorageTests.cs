@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NUnit.Framework;
+using NUnit.Framework.Internal;
 using Task2;
 
 namespace Task1.Tests
@@ -26,10 +27,9 @@ namespace Task1.Tests
         [Test, TestCaseSource(nameof(TestCasesForUploadDownload))]
         public bool TestUploadToFileDownload(CustomSet<Book> booksUp)
         {
-            BookListStorage.UploadToFile(booksUp, @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test");
-            CustomSet<Book> booksDown =
-                BookListStorage.DownloadFromFile(
-                    @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test");
+            BookListStorage storage = new BookListStorage(new Task1.Logger.Logger(), @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test");
+            storage.UploadToFile(booksUp);
+            CustomSet<Book> booksDown = storage.DownloadFromFile();
             return booksDown.Equals(booksUp);
         }
 
