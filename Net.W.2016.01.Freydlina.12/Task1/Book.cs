@@ -46,23 +46,33 @@ namespace Task1
 
         public override string ToString()
         {
-            string authorsString = "";
-            int i = 1;
-            foreach (var author in Authors)
+            string result = "";
+            if (Authors.Length != 0)
             {
-                authorsString += $"{author}";
-                if (i < 4)
+                int i = 1;
+                foreach (var author in Authors)
                 {
-                    authorsString += ", ";
-                    i++;
-                }
-                else
-                {
-                    authorsString += "and other";
-                    break;
+                    result += $"{author}";
+                    if (i == Authors.Length - 1)
+                    {
+                        result += ".";
+                    }
+                    else if (i < 4)
+                    {
+                        result += ", ";
+                        i++;
+                    }
+                    else
+                    {
+                        result += " and other.";
+                        break;
+                    }
                 }
             }
-            return $"{authorsString}. {Title} - {Publisher}, {PublishingYear}";
+            result += Title;
+            if (Publisher != null) result += " - " + Publisher;
+            if (PublishingYear > 1000) result += ", " + PublishingYear;
+            return result;
         }
 
         public override bool Equals(object obj)

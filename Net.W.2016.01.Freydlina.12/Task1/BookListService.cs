@@ -52,7 +52,7 @@ namespace Task1
             return from Book book in Books where tag(book) select book;
         }
 
-        public void SortBooksByTag(Func<Book,Book> tag)
+        public void SortBooksByTag<TKey>(Func<Book,TKey> tag)
         {
             if (tag == null) throw new ArgumentNullException();
             Books.Collection.SortBy(tag);

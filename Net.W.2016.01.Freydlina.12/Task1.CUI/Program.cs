@@ -37,11 +37,11 @@ namespace Task1.CUI
                     break;
                 case "3": PrintBooks(service.Books);
                     break;
-                case "4": BooksMenu("Add");
+                case "4": BooksMenu(AddBook);
                     break;
-                case "5": BooksMenu("Remove");
+                case "5": BooksMenu(RemoveBook);
                     break;
-                case "6": FindTagsMenu();
+                case "6": SortTagsMenu();
                     break;
                 case "7": FindTagsMenu();
                     break;
@@ -69,7 +69,7 @@ namespace Task1.CUI
                 "\n8. Save books from BookService to file" +
                 "\n---" +
                 "\n0. Exit");
-            Console.WriteLine(">>");
+            Console.Write(">>");
         }
 
         private static void FindTagsMenu()
@@ -113,24 +113,20 @@ namespace Task1.CUI
             switch (tag)
             {
                 case "1":
-                    Console.WriteLine("Enter author");
-                    string author = Console.ReadLine();
-                    PrintBooks(service.SortBooksByTag(b=>b.Authors[0]));
+                    service.SortBooksByTag(b => b.Authors?[0]);
+                    PrintBooks(service.Books);
                     break;
                 case "2":
-                    Console.WriteLine("Enter title");
-                    string title = Console.ReadLine();
-                    PrintBooks(service.SortBooksByTag(b => b.Title == title));
+                    service.SortBooksByTag(b => b.Title);
+                    PrintBooks(service.Books);
                     break;
                 case "3":
-                    Console.WriteLine("Enter publisher");
-                    string publisher = Console.ReadLine();
-                    PrintBooks(service.SortBooksByTag(b => b.Publisher == publisher));
+                    service.SortBooksByTag(b => b.Publisher);
+                    PrintBooks(service.Books);
                     break;
                 case "4":
-                    Console.WriteLine("Enter year of publishing");
-                    int year = int.Parse(Console.ReadLine());
-                    PrintBooks(service.SortBooksByTag(b => b.PublishingYear == year));
+                    service.SortBooksByTag(b => b.PublishingYear);
+                    PrintBooks(service.Books);
                     break;
                 case "0":
                     MainMenu();
@@ -150,11 +146,37 @@ namespace Task1.CUI
                               "\n4. Year of publishing" +
                               "\n---" +
                               "\n0. Cancel");
-            Console.WriteLine(">>");
+            Console.Write(">>");
         }
 
-        private static void BooksMenu(string action)
+        private static void BooksMenu(Action<Book> action)
         {
+            OutBooksMenu(action.Method.Name);
+            string tag = Console.ReadLine();
+            switch (tag)
+            {
+                case "1":
+                    action(new Book("Haffner, Stacey. Announcing.NET Framework 4.6.2", "Microsoft", 2016));
+                    break;
+                case "2":
+                    action(new Book("Understanding .NET Just-In-Time Compilation", "Telerik"));
+                    break;
+                case "3":
+                    action(new Book("Understanding Garbage Collection in .NET"));
+                    break;
+                case "4":
+                    action(new Book("CrossNet", "Codeplex.com", 2012));
+                    break;
+                case "5":
+                    action(GetCustomBook());
+                    break;
+                case "0":
+                    MainMenu();
+                    break;
+                default:
+                    Console.WriteLine("Invalid command");
+                    break;
+            }
         }
 
         private static void OutBooksMenu(string action)
@@ -167,7 +189,7 @@ namespace Task1.CUI
                               "\n5. Custom ..." +
                               "\n---" +
                               "\n0. Cancel");
-            Console.WriteLine(">>");
+            Console.Write(">>");
         }
 
         private static Book GetCustomBook()
@@ -211,22 +233,15 @@ namespace Task1.CUI
                 Console.WriteLine(book.ToString());
         }
 
-        private static void AddBook()
+        private static void AddBook(Book book)
         {
-            Book book = GetCustomBook();
             service.AddBook(book);
         }
 
-        private static void RemoveBook()
+        private static void RemoveBook(Book book)
         {
-            Book book = GetCustomBook();
             if(!service.RemoveBook(book))
                 Console.WriteLine("Book not found");
         }
-
-        private static void SortFind()
-        {
-        }
-        
     }
 }
