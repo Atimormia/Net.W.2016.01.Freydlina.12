@@ -33,15 +33,37 @@ namespace Task1
             return Equals(other);
         }
 
-        public int CompareTo(Book other, Func<Book,int> comparer)
+        bool Equals(Book other)
         {
-            return comparer(other);
+            if (other == null)
+                return false;
+            if (ReferenceEquals(this, other))
+                return true;
+            if(Authors.Length==other.Authors.Length)
+                for (int i = 0; i < Authors.Length; i++)
+                    if (!Authors[i].Equals(other.Authors[i]))
+                        return false;
+            return Title.Equals(other.Title) &&
+                Publisher.Equals(other.Publisher) &&
+                PublishingYear.Equals(other.PublishingYear);
+        }
+
+        public int CompareTo(Book other, Func<Book,Book,int> comparer)
+        {
+            return comparer(this,other);
         }
 
         public int CompareTo(Book other)
         {
             if (other == null) return 1;
-            return CompareTo(other, o => string.Compare(Authors[0], o.Authors[0], StringComparison.Ordinal));
+            return CompareTo(other, (b1, b2) =>
+            {
+                if (b1.Authors.Length == 0)
+                    if (b2.Authors.Length == 0) return 0;
+                    else return -1;
+                if (b2.Authors.Length == 0) return 1;
+                return string.Compare(b1.Authors[0], b2.Authors[0], StringComparison.Ordinal);
+            });
         }
 
         public override string ToString()
@@ -85,10 +107,7 @@ namespace Task1
             {
                 return false;
             }
-            return Title.Equals(((Book) obj).Title) && 
-                Authors.Equals(((Book)obj).Authors) && 
-                Publisher.Equals(((Book)obj).Publisher) && 
-                PublishingYear.Equals(((Book)obj).PublishingYear);
+            return Equals((Book) obj);
         }
 
         public override int GetHashCode()
