@@ -8,7 +8,7 @@ namespace Task1
 {
     public interface IBooksStorage
     {
-        void UploadTo(IEnumerable<Book> books);
-        IEnumerable<Book> DownloadFrom();
+        void Save(IEnumerable<Book> books);
+        IEnumerable<Book> Open();
     }
 }

@@ -58,9 +58,9 @@ namespace Task1
             books.Collection.SortBy(tag);
         }
 
-        public void SaveTo(IBooksStorage storage) => storage.UploadTo(books);
+        public void SaveTo(IBooksStorage storage) => storage.Save(books);
 
-        public void OpenFrom(IBooksStorage storage) => books = new CustomSet<Book>(storage.DownloadFrom());
+        public void OpenFrom(IBooksStorage storage) => books = new CustomSet<Book>(storage.Open());
 
         public bool Equals(BookListService other)
         {

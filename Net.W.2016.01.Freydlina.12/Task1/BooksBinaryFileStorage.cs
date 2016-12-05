@@ -22,7 +22,7 @@ namespace Task1
             this.fileName = fileName;
         }
 
-        public void UploadTo(IEnumerable<Book> books)
+        public void Save(IEnumerable<Book> books)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Task1
 
         }
 
-        public IEnumerable<Book> DownloadFrom()
+        public IEnumerable<Book> Open()
         {
             CustomSet<Book> books = new CustomSet<Book>();
             try

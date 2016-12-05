@@ -69,6 +69,7 @@ namespace Task1
                 int i = 1;
                 foreach (var author in Authors)
                 {
+                    if (author == "") continue;
                     result += $"{author}";
                     if (i == Authors.Length - 1)
                     {

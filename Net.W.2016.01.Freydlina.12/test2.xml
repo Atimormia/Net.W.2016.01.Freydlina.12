@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<books>
+  <book>
+    <title>Announcing.NET Framework 4.6.2</title>
+    <authors>
+      <author>Haffner, Stacey</author>
+    </authors>
+    <publisher>Microsoft</publisher>
+    <year>2016</year>
+  </book>
+  <book>
+    <title>.NET Core - .NET Goes Cross - Platform with.NET Core</title>
+    <authors>
+      <author>Carter, Phillip</author>
+      <author>Knezevic, Zlatko</author>
+    </authors>
+    <publisher>Microsoft</publisher>
+    <year>2016</year>
+  </book>
+  <book>
+    <title>Understanding .NET Just-In-Time Compilation</title>
+    <authors />
+    <publisher>Telerik</publisher>
+    <year>1000</year>
+  </book>
+</books>

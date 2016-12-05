@@ -58,6 +58,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BooksBinaryFileStorageTests.cs" />
+    <Compile Include="BooksXmlStorageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
