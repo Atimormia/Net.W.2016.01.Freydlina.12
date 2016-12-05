@@ -7,7 +7,7 @@ using Task2;
 namespace Task1.Tests
 {
     [TestFixture]
-    public class BookListStorageTests
+    public class BooksBinaryFileStorageTests
     {
         public static IEnumerable<TestCaseData> TestCasesForUploadDownload
         {
@@ -27,10 +27,13 @@ namespace Task1.Tests
         [Test, TestCaseSource(nameof(TestCasesForUploadDownload))]
         public bool TestUploadToFileDownload(CustomSet<Book> booksUp)
         {
-            BookListStorage storage = new BookListStorage(new Task1.Logger.Logger(), @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test");
-            storage.UploadToFile(booksUp);
-            CustomSet<Book> booksDown = storage.DownloadFromFile();
-            return booksDown.Equals(booksUp);
+            Logger.Logger logger = new Logger.Logger();
+            BooksBinaryFileStorage storage = new BooksBinaryFileStorage(logger, @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test");
+            BookListService serviceToSave = new BookListService(booksUp,logger);
+            serviceToSave.SaveTo(storage);
+            BookListService serviceToOpen = new BookListService(logger);
+            serviceToOpen.OpenFrom(storage);
+            return serviceToSave.Equals(serviceToOpen);
         }
 
         

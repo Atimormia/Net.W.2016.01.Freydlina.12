@@ -6,15 +6,15 @@ using Task2;
 
 namespace Task1
 {
-    public class BookListService
+    public class BookListService: IEquatable<BookListService>
     {
-        public CustomSet<Book> Books { get; }
+        private CustomSet<Book> books;
         private ILogger logger;
 
         public BookListService(ILogger logger)
         {
             if(logger==null) throw new ArgumentNullException(nameof(logger));
-            Books = new CustomSet<Book>();
+            books = new CustomSet<Book>();
             this.logger = logger;
         }
 
@@ -22,20 +22,20 @@ namespace Task1
         {
             if (books == null) throw new ArgumentNullException();
             foreach (var book in books)
-                Books.Add(book);
+                this.books.Add(book);
         }
 
         public void AddBook(Book newBook)
         {
             if (newBook == null) throw new ArgumentNullException();
-            Books.Add(newBook);
+            books.Add(newBook);
             logger.Debug(newBook + " added");
         }
 
         public bool RemoveBook(Book book)
         {
             if (book == null) throw new ArgumentNullException();
-            if (!Books.Remove(book)) return false;
+            if (!books.Remove(book)) return false;
             logger.Debug(book + " removed");
             return true;
         }
@@ -43,19 +43,42 @@ namespace Task1
         public Book FindBookByTag(Predicate<Book> tag)
         {
             if (tag == null) throw new ArgumentNullException();
-            return Books.FirstOrDefault(book => tag(book));
+            return books.FirstOrDefault(book => tag(book));
         }
 
         public IEnumerable<Book> FindBooksByTag(Predicate<Book> tag)
         {
             if (tag == null) throw new ArgumentNullException();
-            return from Book book in Books where tag(book) select book;
+            return from Book book in books where tag(book) select book;
         }
 
         public void SortBooksByTag<TKey>(Func<Book,TKey> tag)
         {
             if (tag == null) throw new ArgumentNullException();
-            Books.Collection.SortBy(tag);
+            books.Collection.SortBy(tag);
+        }
+
+        public void SaveTo(IBooksStorage storage) => storage.UploadTo(books);
+
+        public void OpenFrom(IBooksStorage storage) => books = new CustomSet<Book>(storage.DownloadFrom());
+
+        public bool Equals(BookListService other)
+        {
+            if (other == null) return false;
+            IEquatable<CustomSet<Book>> equatableBooks = other.books;
+            return equatableBooks.Equals(books);
+        }
+
+        public string[] PrintBooks()
+        {
+            string[] booksStrings = new string[books.Count];
+            int i = 0;
+            foreach (var book in books)
+            {
+                booksStrings[i] = book.ToString();
+                i++;
+            }
+            return booksStrings;
         }
     }
 }

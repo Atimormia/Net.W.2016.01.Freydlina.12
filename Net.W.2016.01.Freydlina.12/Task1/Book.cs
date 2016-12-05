@@ -1,15 +1,8 @@
 ﻿using System;
+using System.Linq;
 
 namespace Task1
 {
-    //public enum BookAttributes
-    //{
-    //    Title,
-    //    Author,
-    //    Publisher,
-    //    PublishingYear
-    //}
-
     public class Book: IEquatable<Book>, IComparable<Book>
     {
         public string Title { get; }
@@ -40,9 +33,11 @@ namespace Task1
             if (ReferenceEquals(this, other))
                 return true;
             if(Authors.Length==other.Authors.Length)
-                for (int i = 0; i < Authors.Length; i++)
-                    if (!Authors[i].Equals(other.Authors[i]))
-                        return false;
+                if (Authors.Where((t, i) => !t.Equals(other.Authors[i])).Any())
+                    return false;
+                //for (int i = 0; i < Authors.Length; i++)
+                //    if (!Authors[i].Equals(other.Authors[i]))
+                //        return false;
             return Title.Equals(other.Title) &&
                 Publisher.Equals(other.Publisher) &&
                 PublishingYear.Equals(other.PublishingYear);

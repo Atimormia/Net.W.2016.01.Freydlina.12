@@ -45,7 +45,8 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookListService.cs" />
-    <Compile Include="BookListStorage.cs" />
+    <Compile Include="BooksBinaryFileStorage.cs" />
+    <Compile Include="IBooksStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

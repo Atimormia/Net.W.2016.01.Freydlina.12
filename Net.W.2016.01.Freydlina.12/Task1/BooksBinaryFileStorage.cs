@@ -10,19 +10,19 @@ using Task2;
 
 namespace Task1
 {
-    public class BookListStorage
+    public class BooksBinaryFileStorage: IBooksStorage
     {
-        private ILogger logger;
-        private string fileName;
+        private readonly ILogger logger;
+        private readonly string fileName;
 
-        public BookListStorage(ILogger logger,string fileName)
+        public BooksBinaryFileStorage(ILogger logger,string fileName)
         {
             if (logger == null || fileName == null) throw new ArgumentNullException();
             this.logger = logger;
             this.fileName = fileName;
         }
 
-        public void UploadToFile(CustomSet<Book> books)
+        public void UploadTo(IEnumerable<Book> books)
         {
             try
             {
@@ -48,7 +48,7 @@ namespace Task1
 
         }
 
-        public CustomSet<Book> DownloadFromFile()
+        public IEnumerable<Book> DownloadFrom()
         {
             CustomSet<Book> books = new CustomSet<Book>();
             try

@@ -14,7 +14,7 @@ namespace Task1.CUI
         private static Logger.Logger logger = new Logger.Logger();
         private static string fileName =
                 @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test";
-        private static BookListStorage storage = new BookListStorage(logger,fileName);
+        private static BooksBinaryFileStorage storage = new BooksBinaryFileStorage(logger,fileName);
 
         static void Main(string[] args)
         {
@@ -33,9 +33,10 @@ namespace Task1.CUI
             {
                 case "1": CreateBookService();
                     break;
-                case "2": service = new BookListService(storage.DownloadFromFile(),logger);
+                case "2": service = new BookListService(logger);
+                    service.OpenFrom(storage);
                     break;
-                case "3": PrintBooks(service.Books);
+                case "3": Console.WriteLine(service.PrintBooks());
                     break;
                 case "4": BooksMenu(AddBook);
                     break;
@@ -45,7 +46,7 @@ namespace Task1.CUI
                     break;
                 case "7": FindTagsMenu();
                     break;
-                case "8": storage.UploadToFile(service.Books);
+                case "8": service.SaveTo(storage);
                     break;
                 case "0": Environment.Exit(0);
                     break;
@@ -114,19 +115,19 @@ namespace Task1.CUI
             {
                 case "1":
                     service.SortBooksByTag(b => b.Authors?[0]);
-                    PrintBooks(service.Books);
+                    Console.WriteLine(service.PrintBooks());
                     break;
                 case "2":
                     service.SortBooksByTag(b => b.Title);
-                    PrintBooks(service.Books);
+                    Console.WriteLine(service.PrintBooks());
                     break;
                 case "3":
                     service.SortBooksByTag(b => b.Publisher);
-                    PrintBooks(service.Books);
+                    Console.WriteLine(service.PrintBooks());
                     break;
                 case "4":
                     service.SortBooksByTag(b => b.PublishingYear);
-                    PrintBooks(service.Books);
+                    Console.WriteLine(service.PrintBooks());
                     break;
                 case "0":
                     MainMenu();
@@ -224,7 +225,7 @@ namespace Task1.CUI
                 new Book("Understanding .NET Just-In-Time Compilation", "Telerik")
             };
             service = new BookListService(books, logger);
-            PrintBooks(service.Books);
+            Console.WriteLine(service.PrintBooks());
         }
 
         private static void PrintBooks(IEnumerable<Book> books)
