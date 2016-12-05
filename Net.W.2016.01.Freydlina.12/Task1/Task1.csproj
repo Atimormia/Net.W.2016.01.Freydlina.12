@@ -45,10 +45,11 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookListService.cs" />
-    <Compile Include="BooksBinaryFileStorage.cs" />
-    <Compile Include="BooksXmlStorage.cs" />
-    <Compile Include="IBooksStorage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Storage\BooksBinaryFileStorage.cs" />
+    <Compile Include="Storage\BooksSerializedStorage.cs" />
+    <Compile Include="Storage\BooksXmlStorage.cs" />
+    <Compile Include="Storage\IBooksStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Task1.Logger\Task1.Logger.csproj">

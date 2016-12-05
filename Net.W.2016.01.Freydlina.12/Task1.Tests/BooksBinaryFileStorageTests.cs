@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
+using Task1.Storage;
 using Task2;
 
 namespace Task1.Tests

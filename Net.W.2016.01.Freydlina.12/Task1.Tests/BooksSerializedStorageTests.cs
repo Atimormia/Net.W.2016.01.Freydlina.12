@@ -8,7 +8,7 @@ using Task2;
 namespace Task1.Tests
 {
     [TestFixture]
-    public class BooksXmlStorageTests
+    public class BooksSerializedStorageTests
     {
         public static IEnumerable<TestCaseData> TestCasesForUploadDownload
         {
@@ -29,7 +29,7 @@ namespace Task1.Tests
         public bool TestUploadToFileDownload(CustomSet<Book> booksUp)
         {
             Logger.Logger logger = new Logger.Logger();
-            BooksXmlStorage storage = new BooksXmlStorage(logger, @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test2.xml");
+            BooksBinaryFileStorage storage = new BooksBinaryFileStorage(logger, @"C:\Users\Polina\Documents\git\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\Net.W.2016.01.Freydlina.12\test3.dat");
             BookListService serviceToSave = new BookListService(booksUp, logger);
             serviceToSave.SaveTo(storage);
             BookListService serviceToOpen = new BookListService(logger);

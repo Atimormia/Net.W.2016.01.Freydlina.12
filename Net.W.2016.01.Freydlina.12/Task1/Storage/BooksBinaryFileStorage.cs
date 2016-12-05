@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using Task1.Logger;
 using Task2;
 
-namespace Task1
+namespace Task1.Storage
 {
     public class BooksBinaryFileStorage: IBooksStorage
     {
@@ -17,7 +13,8 @@ namespace Task1
 
         public BooksBinaryFileStorage(ILogger logger,string fileName)
         {
-            if (logger == null || fileName == null) throw new ArgumentNullException();
+            if (logger == null) logger = new Logger.Logger();
+            if (fileName == null) throw new ArgumentNullException();
             this.logger = logger;
             this.fileName = fileName;
         }
