@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace Task1
 {
-    public class Book: IEquatable<Book>, IComparable<Book>
+    [Serializable]
+    public class Book: IEquatable<Book>, IComparable<Book>, ISerializable
     {
         public string Title { get; }
         public string[] Authors { get; }
@@ -20,6 +22,12 @@ namespace Task1
             PublishingYear = publishingYear;
             Authors = authors;
         }
+
+        public Book(SerializationInfo info, StreamingContext context)
+            :this((string)info.GetValue("title",typeof(string)),
+                 (string)info.GetValue("publisher",typeof(string)),
+                 (int)info.GetValue("year",typeof(int)),
+                 (string[])info.GetValue("authors",typeof(string[]))) { }
 
         bool IEquatable<Book>.Equals(Book other)
         {
@@ -117,5 +125,14 @@ namespace Task1
                 return hashCode;
             }
         }
+        
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            info.AddValue("title", Title, typeof(string));
+            info.AddValue("authors", Authors, typeof(string[]));
+            info.AddValue("publisher", Publisher, typeof(string));
+            info.AddValue("year", PublishingYear, typeof(int));
+        }
+
     }
 }
